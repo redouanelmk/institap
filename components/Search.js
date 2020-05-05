@@ -5,6 +5,7 @@ import FilmItem from './FilmItem'
 import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi'
 import { from } from 'rxjs/observable/from'
 
+
 class Search extends React.Component {
 
     constructor(props){
@@ -43,6 +44,11 @@ class Search extends React.Component {
         })
         this._loadFilms()
     }
+    
+    _displayDetailForFilm = (idFilm) => {
+        console.log("Display film with id " + idFilm)
+        this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
+    }
 
     render() {
         console.log("RENDER")
@@ -63,19 +69,20 @@ class Search extends React.Component {
                  }}
                     data={this.state.films}
                     keyExtractor= {(item) => item.id.toString()}
-                    renderItem={({item}) => <FilmItem film={item}/>}
+                    renderItem={({item}) => <FilmItem film={item} displayDetailForFilm= {this._displayDetailForFilm}/>}
                       />
 
             </View>
 
-        )
-    }
+        )}
 } 
 
 const styles = StyleSheet.create({
     main_container: {
         flex:1,
-        marginTop:20
+        justifyContent:"center",
+        alignContent:"center"
+        
     },
     TextInput: {
         width:200,
